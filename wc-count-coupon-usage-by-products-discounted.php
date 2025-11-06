@@ -13,10 +13,10 @@ Version: 1.0.0
  * Did try to solve, but it is being a PITA. :)
  * 
  * WHAT THIS DOES
- * Take for example we create a coupon code for 100% off with an 8 limit usage tied to certain product(s). We want the code to only be used to order a 
+ * Take for example we create a coupon code for 100% off with an 8 usage limit. We want the code to only be used to order a 
  * grand total of 8 discounted products.
  *
- * This solves the user being able to create 8 orders with more than 8 discounted products ordered.
+ * This solves the user being able to create 8 orders with more than 8 discounted products.
  * For example, you create 8 orders and each has 2 discounted products. That is 16 discounted products instead of the 8 limit we want with the coupon code.
  * Woo counts the usage of the coupon code by order, and not per product in the order.
  * 
