@@ -8,7 +8,7 @@ Version: 1.0.0
 */
 
 /**
- * MINOR BUG: If coupon codes are used at checkout, the usage for each is incremented incorrectly.
+ * MINOR BUG: If more than one coupon code is used at checkout, the usage for each is incremented incorrectly.
  * Work around for now is we prevent the coupon from being used with any other coupons. 
  * Did try to solve, but it is being a PITA. :)
  * 
