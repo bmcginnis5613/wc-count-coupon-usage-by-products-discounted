@@ -25,7 +25,7 @@ Version: 1.0.0
  * only a total of 3 are discounted. The coupon usage is also only incremented by 3 and not 4.
  * 
  * If there are different products that can be used with the code, the highest priced products are discounted first.
-*/
+ */
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
