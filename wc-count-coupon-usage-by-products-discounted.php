@@ -4,7 +4,7 @@ Plugin Name: WooCommerce Count Coupon Usage by Products Ordered
 Description: Increment the coupon usage by amount of discounted products ordered.
 Author: FirstTracks Marketing
 Author URI: https://firsttracksmarketing.com/
-Version: 1.0.0
+Version: 1.1.0
 */
 
 /**
@@ -26,6 +26,42 @@ Version: 1.0.0
  * 
  * If there are different products that can be used with the code, the highest priced products are discounted first.
  */
+
+/**
+ * Check if WooCommerce is active before plugin activation
+ */
+function wc_coupon_quantity_usage_activate() {
+    if (!is_plugin_active('woocommerce/woocommerce.php')) {
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die(
+            __('WooCommerce Count Coupon Usage by Products Ordered requires WooCommerce to be installed and active. Please install and activate WooCommerce first.', 'wc-coupon-quantity-usage'),
+            'Plugin dependency check',
+            array('back_link' => true)
+        );
+    }
+}
+register_activation_hook(__FILE__, 'wc_coupon_quantity_usage_activate');
+
+/**
+ * Check if plugin is active (helper function)
+ */
+if (!function_exists('is_plugin_active')) {
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
+/**
+ * Show admin notice if WooCommerce is deactivated and plugin is active
+ */
+function wc_coupon_quantity_usage_admin_notice() {
+    if (!class_exists('WooCommerce')) {
+        ?>
+        <div class="notice notice-error">
+            <p><?php _e('WooCommerce Count Coupon Usage by Products Ordered requires WooCommerce to be installed and activated.', 'wc-coupon-quantity-usage'); ?></p>
+        </div>
+        <?php
+    }
+}
+add_action('admin_notices', 'wc_coupon_quantity_usage_admin_notice');
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
