@@ -107,33 +107,36 @@ class WC_Coupon_Quantity_Usage {
     }
     
     /**
-     * Add JavaScript to sync checkboxes in admin
-     */
-    public function add_checkbox_sync_script() {
-        $screen = get_current_screen();
-        if ($screen && $screen->id === 'shop_coupon') {
-            ?>
-            <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                // When count_usage_by_quantity is checked, enable individual_use
-                $('#count_usage_by_quantity').on('change', function() {
-                    if ($(this).is(':checked')) {
-                        $('#individual_use').prop('checked', true);
-                    }
+         * Add JavaScript to sync checkboxes in admin
+         */
+        public function add_checkbox_sync_script() {
+            $screen = get_current_screen();
+            if ($screen && $screen->id === 'shop_coupon') {
+                ?>
+                <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    // When count_usage_by_quantity is checked, enable individual_use
+                    $('#count_usage_by_quantity').on('change', function() {
+                        if ($(this).is(':checked')) {
+                            $('#individual_use').prop('checked', true);
+                        } else {
+                            // When unchecked, also uncheck individual_use
+                            $('#individual_use').prop('checked', false);
+                        }
+                    });
+                    
+                    // Prevent unchecking individual_use when count_usage_by_quantity is checked
+                    $('#individual_use').on('change', function() {
+                        if (!$(this).is(':checked') && $('#count_usage_by_quantity').is(':checked')) {
+                            $(this).prop('checked', true);
+                            alert('"Individual use only" cannot be disabled when "Count usage by quantity" is enabled.');
+                        }
+                    });
                 });
-                
-                // Prevent unchecking individual_use when count_usage_by_quantity is checked
-                $('#individual_use').on('change', function() {
-                    if (!$(this).is(':checked') && $('#count_usage_by_quantity').is(':checked')) {
-                        $(this).prop('checked', true);
-                        alert('"Individual use only" cannot be disabled when "Count usage by quantity" is enabled.');
-                    }
-                });
-            });
-            </script>
-            <?php
+                </script>
+                <?php
+            }
         }
-    }
     
     /**
      * Reset coupon discount counter before calculations
